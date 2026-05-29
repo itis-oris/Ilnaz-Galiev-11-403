@@ -1,0 +1,82 @@
+spring:
+  application:
+    name: SkillTrade
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:skilltrade}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000
+
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    content-type: text/html;charset=UTF-8
+    cache: false
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    settings:
+      number_format: "0.##"
+      output_format: HTML
+      recognize_standard_file_extensions: "true"
+      datetime_format: "yyyy-MM-dd HH:mm"
+
+  mvc:
+    static-path-pattern: /static/**
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    whitelabel:
+      enabled: false
+    include-message: always
+    include-binding-errors: always
+
+huggingface:
+  api:
+    url: https://api-inference.huggingface.co/models/cardiffnlp/twitter-xlm-roberta-base-sentiment
+    token: "${HF_TOKEN:}"
+
+libretranslate:
+  api:
+    url: ${LT_URL:https://libretranslate.com/translate}
+    key: "${LT_KEY:}"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: INFO
+    com.itis.oris.skilltrade: DEBUG
+    org.springframework.security: INFO
+
