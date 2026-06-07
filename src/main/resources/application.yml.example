@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:skilltrade}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:CHANGE_ME}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -65,7 +65,7 @@ huggingface:
 
 libretranslate:
   api:
-    url: ${LT_URL:https://libretranslate.com/translate}
+    url: ${LT_URL:http://localhost:5000/translate}
     key: "${LT_KEY:}"
 
 springdoc:
@@ -79,4 +79,3 @@ logging:
     root: INFO
     com.itis.oris.skilltrade: DEBUG
     org.springframework.security: INFO
-
