@@ -30,9 +30,28 @@
 - Отзывы (1-5) после завершённого обмена
 - **Анализ тональности** отзывов через HuggingFace Inference API
   (модель `cardiffnlp/twitter-xlm-roberta-base-sentiment`, мультиязычная) →
-  цветной бейдж POSITIVE / NEUTRAL / NEGATIVE
-- **Перевод описания** через локальный LibreTranslate в Docker (AJAX-кнопка)
+  цветной бейдж POSITIVE / NEUTRAL / NEGATIVE (к сожалению этот сервис не работает с русским языком и я не нашел рабочей версии под свою задачу локально поднимать ИИ для этого я не стал)
+- **Перевод описания** через локальный LibreTranslate в Docker (AJAX-кнопка) (с коробки LibreTranslate не поддерживал русский язык, и я нашел [репозиторий](https://github.com/LibreTranslate/LibreTranslate-Models/blob/main/en_ru.argosmodel) с данными для первода с английского на русский)
 - Профиль: bio, город, средний рейтинг (кэш в Redis), список навыков с AJAX-управлением
 - REST API под `/api/v1/**` со Swagger UI
 - Админ-эндпоинты `/api/v1/admin/**` (категории, навыки, поиск юзеров через
   CriteriaBuilder, блокировка) — управление из Postman / Swagger
+
+## Запуск
+
+```bash
+docker compose up -d --build
+```
+
+Поднимет четыре контейнера:
+
+| Сервис              | Порт на хосте | Назначение                      |
+| ------------------- | ------------- | ------------------------------- |
+| `st-app`            | 8080          | Spring Boot                     |
+| `st-postgres`       | 5433          | PostgreSQL (5432 внутри сети)   |
+| `st-redis`          | —             | Redis (только в docker-network) |
+| `st-libretranslate` | 5000          | переводчик                      |
+
+Открыть:
+- http://localhost:8080/ — главная
+- http://localhost:8080/swagger-ui.html — REST API
